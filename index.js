@@ -2,7 +2,7 @@
 // https://discord.com/api/oauth2/authorize?client_id=754456135616036954&permissions=1074264128&scope=bot
 require('dotenv').config();
 
-let Discord = require('discord.js');
+let Discord = require('discord.js')
 let Leetcode = require('./lib/leetcode')
 let TurndownService = require('turndown')
 
@@ -23,7 +23,10 @@ client.login(TOKEN);
 function formatQuestion(question) {
   console.log(question)
   let description = question.content ? turndownService.turndown(question.content) : ""
-  return `__**${question.title} #${question.questionId} - ${question.difficulty}**__\n` + description +"\n\n" + `https://leetcode.com/problems/${question.titleSlug}`
+  return `__**${question.title} #${question.questionId} - ${question.difficulty}**__\n
+    ` + description +"\n" +
+    "\n" +
+    `https://leetcode.com/problems/${question.titleSlug}`
 }
 
 client.on('ready', () => {
@@ -45,7 +48,13 @@ client.on('message', async (message) => {
   }
 
   if (commands[1] === "help") {
-    message.channel.send("**Leetcode Bot**\nGet good at Leetcode\n\n**!leetcode**: Random Leetcode Question\n**!leetcode -<Number>**: Leetcode Question by ID\n**!leetcode <Title>**: Leetcode Question by Title\n**!leetcode <easy/medium/hard>**: Leetcode Question by Difficulty")
+    msg.channel.send("**Leetcode Bot**\n" +
+        "Get good at Leetcode\n" +
+        "\n" +
+        "**!leetcode**: Random Leetcode Question\n" +
+        "**!leetcode -<Number>**: Leetcode Question by ID\n" +
+        "**!leetcode <Title>**: Leetcode Question by Title\n" +
+        "**!leetcode <easy/medium/hard>**: Leetcode Question by Difficulty")
     return
   }
 
