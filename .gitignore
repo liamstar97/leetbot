@@ -2,9 +2,9 @@
 node_modules
 package-lock.json
 
-# Bot config
+# Bot config.json
 .env
 
-#IDE config directories
+#IDE config.json directories
 .idea
 .vscode
