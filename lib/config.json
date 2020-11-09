@@ -1,4 +1,8 @@
 {
-    "problems": "https://leetcode.com/api/problems/algorithms/",
-    "graphql": "https://leetcode.com/graphql"
+    "urls" : 
+    { 
+            "problems": "https://leetcode.com/api/problems/algorithms/",
+            "graphql": "https://leetcode.com/graphql/"
+    }
+     
 }
