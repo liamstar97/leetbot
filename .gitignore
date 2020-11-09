@@ -1,0 +1,10 @@
+# NPM garbage
+node_modules
+package-lock.json
+
+# Bot config
+.env
+
+#IDE config directories
+.idea
+.vscode

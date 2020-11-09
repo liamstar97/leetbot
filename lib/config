@@ -1,0 +1,6 @@
+{
+    urls: {
+        problems: 'https://leetcode.com/api/problems/algorithms/'
+        graphql: 'https://leetcode.com/problems/'
+    }
+}

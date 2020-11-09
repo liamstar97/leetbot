@@ -9,7 +9,9 @@ let TurndownService = require('turndown')
 let client = new Discord.Client()
 let turndownService = new TurndownService()
 
-const TOKEN = process.env.TOKEN
+const TOKEN = process.env.TOKEN;
+
+console.log(TOKEN);
 
 client.login(TOKEN);
 
@@ -40,7 +42,7 @@ client.on('message', async (msg) => {
     return
   }
 
-  if (commands[1].startsWith("#")) {
+  if (commands[1].startsWith("-")) {
     let id = parseInt(commands[1].substring(1))
     if (isNaN(id)) {
       msg.channel.send("Please a valid question ID")
@@ -71,7 +73,7 @@ client.on('message', async (msg) => {
   }
 
   // PARSE FLAGS
-  
+
   // while (commands[i] < commands.length && commands[i])
 
 });
