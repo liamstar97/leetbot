@@ -15,5 +15,5 @@ _Ensure you include your bots token where TOKEN = "DiscordBotToken" and pick you
 
 #### Running bot:
 ```
-> node index.js
+> node app.js
 ```
