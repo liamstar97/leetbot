@@ -13,7 +13,7 @@ A bot that serves up leetcode problems, and allows users to interact with a pers
 ```
 _Ensure you include your bots token where TOKEN = "DiscordBotToken"_
 
-####Running bot:
+#### Running bot:
 ```
 > node index.js
 ```
