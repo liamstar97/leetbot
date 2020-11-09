@@ -1,5 +1,5 @@
 # Leetbot
-A bot that serves up leetcode problems, and allows users to interact with a persistent leaderboard.
+A bot that serves up leetcode problems.
 ## Setup:
 #### To build and run the bot you require the following dependencies:
 * [Node.js](https://nodejs.org/en/)
