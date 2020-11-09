@@ -34,8 +34,8 @@ client.on('ready', () => {
   }
 );
 
-client.on('message', async (msg) => {
-  let commands = msg.content.split(" ")
+client.on('message', async (message) => {
+  let commands = message.content.split(" ")
   if (commands.length < 1 || commands[0] !== PREFIX + "leetcode") {
     return
   }
