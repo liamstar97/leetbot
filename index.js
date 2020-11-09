@@ -10,11 +10,16 @@ let client = new Discord.Client()
 let turndownService = new TurndownService()
 
 const TOKEN = process.env.TOKEN;
-
 console.log(TOKEN);
 
 client.login(TOKEN);
 
+/**
+ * Formats the leetcode question
+ * 
+ * @param {*} question The leetcode question to be formatted.
+ * @returns The formatted leetcode question as a string
+ */
 function formatQuestion(question) {
   console.log(question)
   let description = question.content ? turndownService.turndown(question.content) : ""
@@ -22,54 +27,57 @@ function formatQuestion(question) {
 }
 
 client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}!`);
-});
+    console.log(`Logged in as ${client.user.tag}!`);
+  }
+);
 
-client.on('message', async (msg) => {
-  let commands = msg.content.split(" ")
+client.on('message', async (message) => {
+  let commands = message.content.split(" ")
+
   if (commands.length < 1 || commands[0] !== "!leetcode") {
     return
   }
 
   if (commands.length == 1) {
     let q = await Leetcode.getRandomQuestion()
-    msg.channel.send(formatQuestion(q),{split: true});
+    message.channel.send(formatQuestion(q),{split: true});
     return
   }
 
   if (commands[1] === "help") {
-    msg.channel.send("**Leetcode Bot**\nGet good at Leetcode\n\n**!leetcode**: Random Leetcode Question\n**!leetcode #<Number>**: Leetcode Question by ID\n**!leetcode <Title>**: Leetcode Question by Title\n**!leetcode <easy/medium/hard>**: Leetcode Question by Difficulty")
+    message.channel.send("**Leetcode Bot**\nGet good at Leetcode\n\n**!leetcode**: Random Leetcode Question\n**!leetcode -<Number>**: Leetcode Question by ID\n**!leetcode <Title>**: Leetcode Question by Title\n**!leetcode <easy/medium/hard>**: Leetcode Question by Difficulty")
     return
   }
 
   if (commands[1].startsWith("-")) {
     let id = parseInt(commands[1].substring(1))
     if (isNaN(id)) {
-      msg.channel.send("Please a valid question ID")
+      message.channel.send("Please a valid question ID")
       return
     }
     try {
       let q = await Leetcode.getQuestionById(id)
-      msg.channel.send(formatQuestion(q),{split: true});
-    } catch(err) {
-      msg.channel.send(err)
+      message.channel.send(formatQuestion(q),{split: true});
+    } catch(error) {
+      message.channel.send(error)
     }
     return
   }
 
   let difficulties = ['easy', 'medium', 'hard']
+  
   if (difficulties.includes(commands[1].toLowerCase())){
-    let q = await Leetcode.getRandomQuestion(difficulties.indexOf(commands[1].toLowerCase()))
-    msg.channel.send(formatQuestion(q),{split: true});
+    let randomQuestion = await Leetcode.getRandomQuestion(difficulties.indexOf(commands[1].toLowerCase()))
+    message.channel.send(formatQuestion(randomQuestion),{split: true});
     return
   }
 
   let title = commands.slice(1).join(" ")
   try {
-    let q = await Leetcode.getQuestionByTitle(title)
-    msg.channel.send(formatQuestion(q),{split: true});
-  } catch(err) {
-    msg.channel.send(err)
+    let question = await Leetcode.getQuestionByTitle(title)
+    message.channel.send(formatQuestion(question),{split: true});
+  } catch(error) {
+    message.channel.send(error)
   }
 
   // PARSE FLAGS
