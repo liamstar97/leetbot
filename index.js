@@ -10,6 +10,7 @@ let client = new Discord.Client()
 let turndownService = new TurndownService()
 
 const TOKEN = process.env.TOKEN;
+const PREFIX = process.env.PREFIX;
 
 console.log(TOKEN);
 
@@ -30,7 +31,7 @@ client.on('ready', () => {
 
 client.on('message', async (msg) => {
   let commands = msg.content.split(" ")
-  if (commands.length < 1 || commands[0] !== "!leetcode") {
+  if (commands.length < 1 || commands[0] !== PREFIX + "leetcode") {
     return
   }
 
