@@ -48,13 +48,14 @@ client.on('message', async (message) => {
   }
 
   if (commands[1] === "help") {
-    msg.channel.send("**Leetcode Bot**\n" +
+    message.channel.send("**Leetcode Bot**\n" +
         "Get good at Leetcode\n" +
         "\n" +
         "**!leetcode**: Random Leetcode Question\n" +
         "**!leetcode -<Number>**: Leetcode Question by ID\n" +
         "**!leetcode <Title>**: Leetcode Question by Title\n" +
         "**!leetcode <easy/medium/hard>**: Leetcode Question by Difficulty")
+
     return
   }
 
