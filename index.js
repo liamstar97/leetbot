@@ -1,6 +1,6 @@
 "use strict"
 // https://discord.com/api/oauth2/authorize?client_id=754456135616036954&permissions=1074264128&scope=bot
-require('dotenv').config();
+require('dotenv').config()
 
 let Discord = require('discord.js')
 let Leetcode = require('./lib/leetcode')
@@ -9,12 +9,10 @@ let TurndownService = require('turndown')
 let client = new Discord.Client()
 let turndownService = new TurndownService()
 
-const TOKEN = process.env.TOKEN;
-const PREFIX = process.env.PREFIX;
+const TOKEN = process.env.TOKEN
+const PREFIX = process.env.PREFIX
 
-console.log(TOKEN);
-
-client.login(TOKEN);
+client.login(TOKEN)
 
 /**
  * Formats the leetcode question
@@ -38,9 +36,6 @@ client.on('ready', () => {
 
 client.on('message', async (message) => {
   let commands = message.content.split(" ")
-
-client.on('message', async (msg) => {
-  let commands = msg.content.split(" ")
   if (commands.length < 1 || commands[0] !== PREFIX + "leetcode") {
     return
   }
@@ -59,7 +54,6 @@ client.on('message', async (msg) => {
         "**!leetcode -<Number>**: Leetcode Question by ID\n" +
         "**!leetcode <Title>**: Leetcode Question by Title\n" +
         "**!leetcode <easy/medium/hard>**: Leetcode Question by Difficulty")
-
     return
   }
 
@@ -105,4 +99,3 @@ client.on('message', async (msg) => {
   // await Leetcode.getQuestionByTitle("Longest Palindromic Substring")
   // await Leetcode.getQuestionByTitle("Longest Palindromic Substring")
 })()
-
