@@ -12,8 +12,6 @@ let turndownService = new TurndownService()
 const TOKEN = process.env.TOKEN;
 const PREFIX = process.env.PREFIX;
 
-console.log(TOKEN);
-
 client.login(TOKEN);
 
 function formatQuestion(question) {
