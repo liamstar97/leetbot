@@ -9,7 +9,7 @@ A bot that serves up leetcode problems.
 ###### Windows/Linux:
 ```
 > npm install
-> echo prefix = "YourPrefix" >> .env & echo TOKEN = "DiscordBotToken" >> .env
+> echo PREFIX = "YourPrefix" >> .env & echo TOKEN = "DiscordBotToken" >> .env
 ```
 _Ensure you include your bots token where TOKEN = "DiscordBotToken" and pick your prefered prefix!_
 
