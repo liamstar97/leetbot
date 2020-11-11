@@ -3,99 +3,35 @@
 require('dotenv').config()
 
 let Discord = require('discord.js')
-let Leetcode = require('./lib/leetcode')
-let TurndownService = require('turndown')
+let Leetcode = require('./lib/Leetcode')
+let Command = require('./lib/Commands')
+let Helper = require('./lib/Helpers')
 
 let client = new Discord.Client()
-let turndownService = new TurndownService()
 
 const TOKEN = process.env.TOKEN
 const PREFIX = process.env.PREFIX
 
 client.login(TOKEN)
 
-/**
- * Formats the leetcode question
- * 
- * @param {*} question The leetcode question to be formatted.
- * @returns The formatted leetcode question as a string
- */
-function formatQuestion(question) {
-  console.log(question)
-  let description = question.content ? turndownService.turndown(question.content) : ""
-  return `__**${question.title} #${question.questionId} - ${question.difficulty}**__\n
-    ` + description +"\n" +
-    "\n" +
-    `https://leetcode.com/problems/${question.titleSlug}`
-}
-
 client.on('ready', () => {
-    console.log(`Logged in as ${client.user.tag}!`);
+    console.log(`Logged in as ${client.user.tag}!`)
+    Leetcode.getQuestions().then()
   }
 );
 
 client.on('message', async (message) => {
   let commands = message.content.split(" ")
-  if (commands.length < 1 || commands[0] !== PREFIX + "leetcode") {
+  if (commands.length < 1 || commands[0] !== PREFIX + "leetcode") { //ignore if not leetbot
     return
+  } else if (commands.length === 1) { // return random question if no options are used
+    return Command.returnRandomQuestion(message)
+  } else if (commands.length > 2) { // return question by title
+    let title = commands.slice(1).join(" ")
+    return Command.searchQuestionTitle(message, title)
+  } else if (Helper.isNumber(commands[1])) { // return question by ID
+    return Command.searchQuestionID(message, commands[1])
+  } else { // is a string command
+    return Command.parseStringCommands(message, commands[1])
   }
-
-  if (commands.length == 1) {
-    let q = await Leetcode.getRandomQuestion()
-    message.channel.send(formatQuestion(q),{split: true});
-    return
-  }
-
-  if (commands[1] === "help") {
-    message.channel.send("**Leetcode Bot**\n" +
-        "Get good at Leetcode\n" +
-        "\n" +
-        "**!leetcode**: Random Leetcode Question\n" +
-        "**!leetcode -<Number>**: Leetcode Question by ID\n" +
-        "**!leetcode <Title>**: Leetcode Question by Title\n" +
-        "**!leetcode <easy/medium/hard>**: Leetcode Question by Difficulty")
-    return
-  }
-
-  if (commands[1].startsWith("-")) {
-    let id = parseInt(commands[1].substring(1))
-    if (isNaN(id)) {
-      message.channel.send("Please a valid question ID")
-      return
-    }
-    try {
-      let q = await Leetcode.getQuestionById(id)
-      message.channel.send(formatQuestion(q),{split: true});
-    } catch(error) {
-      message.channel.send(error)
-    }
-    return
-  }
-
-  let difficulties = ['easy', 'medium', 'hard']
-  
-  if (difficulties.includes(commands[1].toLowerCase())){
-    let randomQuestion = await Leetcode.getRandomQuestion(difficulties.indexOf(commands[1].toLowerCase()))
-    message.channel.send(formatQuestion(randomQuestion),{split: true});
-    return
-  }
-
-  let title = commands.slice(1).join(" ")
-  try {
-    let question = await Leetcode.getQuestionByTitle(title)
-    message.channel.send(formatQuestion(question),{split: true});
-  } catch(error) {
-    message.channel.send(error)
-  }
-
-  // PARSE FLAGS
-
-  // while (commands[i] < commands.length && commands[i])
-
 });
-
-(async() => {
-  // console.log(await Leetcode.getRandomQuestion())
-  // await Leetcode.getQuestionByTitle("Longest Palindromic Substring")
-  // await Leetcode.getQuestionByTitle("Longest Palindromic Substring")
-})()
